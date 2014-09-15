@@ -26,11 +26,7 @@ public class User {
 		return trips;
 	}
 
-    public boolean loggedIn() {
-        return true;
-    }
-
     public boolean areYouFriendsWith(User loggedInUser) {
-        return true;
+        return this.getFriends().contains(loggedInUser);
     }
 }
