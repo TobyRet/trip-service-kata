@@ -9,6 +9,8 @@ import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class TripServiceShould {
 
@@ -18,6 +20,7 @@ public class TripServiceShould {
     private static final Trip TRIP1 = new Trip();
     private TripService tripService;
     private User loggedInUser;
+    private User someMockedUser;
 
     @Before
     public void initialise() {
@@ -47,6 +50,14 @@ public class TripServiceShould {
         SOME_USER.addTrip(TRIP1);
 
         assertThat(tripService.getTripsByUser(SOME_USER).get(0), is(TRIP1));
+    }
+
+    @Test public void
+    check_if_a_loggedInUser_and_another_user_are_friends() {
+        loggedInUser = REGISTERED_USER;
+        someMockedUser = mock(User.class);
+        tripService.getTripsByUser(someMockedUser);
+        verify(someMockedUser).areYouFriendsWith(loggedInUser);
     }
 
     private class TestableTripService extends TripService {

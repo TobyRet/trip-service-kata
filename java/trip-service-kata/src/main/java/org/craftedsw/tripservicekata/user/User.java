@@ -29,4 +29,8 @@ public class User {
     public boolean loggedIn() {
         return true;
     }
+
+    public boolean areYouFriendsWith(User loggedInUser) {
+        return true;
+    }
 }

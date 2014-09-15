@@ -9,8 +9,6 @@ import java.util.List;
 
 public class TripService {
 
-    private static boolean isFriend = false;
-
 	public List<Trip> getTripsByUser(User user) throws UserNotLoggedInException {
         List<Trip> tripList = new ArrayList<Trip>();
         isLoggedIn();
@@ -26,8 +24,9 @@ public class TripService {
         }
     }
 
-    protected boolean areFriends(User user, User loggedUser) {
-          return user.getFriends().contains(loggedUser);
+    protected boolean areFriends(User user, User loggedInUser) {
+          //return user.getFriends().contains(loggedInUser);
+        return user.areYouFriendsWith(loggedInUser);
     }
 
     protected List<Trip> findTrips(User user) {
