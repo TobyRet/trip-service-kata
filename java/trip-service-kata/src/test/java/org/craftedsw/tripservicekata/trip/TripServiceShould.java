@@ -14,7 +14,7 @@ public class TripServiceShould {
 
     private static final User GUEST = null;
     private static final User SOME_USER = new User();
-    private static final User USER_WITH_ACCOUNT = new User();
+    private static final User REGISTERED_USER = new User();
     private static final Trip TRIP1 = new Trip();
     private TripService tripService;
     private User loggedInUser;
@@ -34,14 +34,14 @@ public class TripServiceShould {
 
     @Test public void
     return_empty_tripList_if_logged_in_user_is_not_friends_with_another_user() {
-        loggedInUser = USER_WITH_ACCOUNT;
+        loggedInUser = REGISTERED_USER;
 
         assertThat(tripService.getTripsByUser(SOME_USER).isEmpty(), is(true));
     }
 
     @Test public void
-    return_tripList_if_logged_in_user_is_friends_with_another_user() {
-        loggedInUser = USER_WITH_ACCOUNT;
+    return_populated_tripList_if_logged_in_user_is_friends_with_another_user() {
+        loggedInUser = REGISTERED_USER;
 
         SOME_USER.addFriend(loggedInUser);
         SOME_USER.addTrip(TRIP1);
