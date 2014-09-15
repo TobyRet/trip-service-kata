@@ -12,6 +12,7 @@ public class TripService {
     private static boolean isFriend = false;
 
 	public List<Trip> getTripsByUser(User user) throws UserNotLoggedInException {
+
         List<Trip> tripList = new ArrayList<Trip>();
 		if (loggedInUser() == null ) {
             throw new UserNotLoggedInException();
