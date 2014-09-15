@@ -5,7 +5,6 @@ import org.craftedsw.tripservicekata.user.User;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
@@ -17,12 +16,8 @@ public class TripServiceShould {
     private static final User SOME_USER = new User();
     private static final User USER_WITH_ACCOUNT = new User();
     private static final Trip TRIP1 = new Trip();
-    private static final Trip TRIP2 = new Trip();
     private TripService tripService;
     private User loggedInUser;
-    private ArrayList<Trip> someUserTripList;
-    private User someMockedUser;
-    private ArrayList<User> friendList;
 
     @Before
     public void initialise() {
@@ -30,7 +25,7 @@ public class TripServiceShould {
     }
 
     @Test(expected = UserNotLoggedInException.class) public void
-    should_validate_the_logged_in_user() {
+    validate_the_logged_in_user() {
 
         loggedInUser = GUEST;
 
@@ -51,7 +46,7 @@ public class TripServiceShould {
         SOME_USER.addFriend(loggedInUser);
         SOME_USER.addTrip(TRIP1);
 
-        assertThat(tripService.getTripsByUser(SOME_USER).isEmpty(), is(false));
+        assertThat(tripService.getTripsByUser(SOME_USER).get(0), is(TRIP1));
     }
 
     private class TestableTripService extends TripService {
