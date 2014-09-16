@@ -2,20 +2,26 @@ package org.craftedsw.tripservicekata.user;
 
 import org.junit.Test;
 
+import static org.craftedsw.tripservicekata.trip.UserBuilder.aUser;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.matchers.JUnitMatchers.hasItems;
 
 public class UserTest {
 
-    private static final User bob = new User();
-    private static final User toby = new User();
-    private static final User rivka = new User();
+    private static final User PAUL = new User();
+    private static final User TOBY = new User();
 
     @Test public void
-    return_a_list_of_friends_associated_with_a_user() {
-        bob.addFriend(toby);
-        bob.addFriend(rivka);
-        assertThat(bob.getFriends(), hasItems(toby, rivka));
+    should_inform_when_users_are_not_friends() {
+        User user = aUser().friendsWith(PAUL).build();
+        assertThat(user.friendsWith(TOBY), is(false));
+
+    }
+
+    @Test public void
+    should_inform_when_users_are_friends() {
+        User user = aUser().friendsWith(PAUL, TOBY).build();
+        assertThat(user.friendsWith(TOBY), is(true));
     }
 
 }
