@@ -14,14 +14,14 @@ public class UserTest {
     @Test public void
     should_inform_when_users_are_not_friends() {
         User user = aUser().friendsWith(PAUL).build();
-        assertThat(user.friendsWith(TOBY), is(false));
+        assertThat(user.isFriendsWith(TOBY), is(false));
 
     }
 
     @Test public void
     should_inform_when_users_are_friends() {
         User user = aUser().friendsWith(PAUL, TOBY).build();
-        assertThat(user.friendsWith(TOBY), is(true));
+        assertThat(user.isFriendsWith(TOBY), is(true));
     }
 
 }
