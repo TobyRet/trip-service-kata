@@ -15,6 +15,7 @@ public class TripServiceTest {
     private static final User SOME_USER = new User();
     private static final User ANOTHER_USER = new User();
     private static final Trip THAILAND = new Trip();
+    private static final Trip ICELAND = new Trip() ;
     private TestableTripService testableTripService;
     private User loggedInUser;
     private User GUEST = null;
@@ -43,10 +44,30 @@ public class TripServiceTest {
         assertThat(trips.isEmpty(), is(true));
     }
 
+    @Test public void
+    return_a_populated_trips_list_if_user_is_logged_in_and_a_friend() {
+        loggedInUser = REGISTERED_USER;
+
+        User friend = new User();
+        friend.addFriend(loggedInUser);
+        friend.addFriend(ANOTHER_USER);
+        friend.addTrip(THAILAND);
+        friend.addTrip(ICELAND);
+
+        List<Trip> trips = testableTripService.getTripsByUser(friend);
+        assertThat(trips.isEmpty(), is(false));
+        assertThat(trips.size(), is(2));
+    }
+
     private class TestableTripService extends TripService {
         @Override
         protected User loggedInUser() {
             return loggedInUser;
+        }
+
+        @Override
+        protected List<Trip> tripsByUser(User user) {
+            return user.trips();
         }
     }
 	
