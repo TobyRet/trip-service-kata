@@ -12,10 +12,10 @@ import static org.junit.Assert.assertThat;
 
 public class TripServiceTest {
 
-    private static final User SOME_USER = new User() ;
+    private static final User A_USER = new User() ;
     private static final User GUEST = null;
     private static final User REGISTERED_USER = new User();
-    private static final User BOB = new User() ;
+    private static final User A_FRIEND = new User() ;
     private static final Trip THAILAND = new Trip();
     private static final Trip USA = new Trip() ;
     private TripService tripService;
@@ -30,24 +30,26 @@ public class TripServiceTest {
     @Test(expected = UserNotLoggedInException.class) public void
     should_validate_loggedUser() {
         loggedUser = GUEST;
-        tripService.getTripsByUser(SOME_USER);
+        tripService.getTripsByUser(A_USER);
     }
 
     @Test public void
-    should_return_an_empty_friends_list_if_user_logged_in_but_is_a_stranger() {
-        SOME_USER.addFriend(BOB);
-        SOME_USER.addTrip(THAILAND);
-        List<Trip> trips = tripService.getTripsByUser(SOME_USER);
+    should_not_return_any_trips_when_users_are_not_friends() {
+        User stranger = new User();
+        stranger.addFriend(A_FRIEND);
+        stranger.addTrip(THAILAND);
+        List<Trip> trips = tripService.getTripsByUser(stranger);
         assertThat(trips.isEmpty(), is(true));
     }
 
     @Test public void
     should_return_populated_friends_list_if_user_is_logged_in_and_is_a_friend() {
-        SOME_USER.addFriend(BOB);
-        SOME_USER.addFriend(loggedUser);
-        SOME_USER.addTrip(THAILAND);
-        SOME_USER.addTrip(USA);
-        List<Trip> trips = tripService.getTripsByUser(SOME_USER);
+        User friend = new User();
+        friend.addFriend(A_FRIEND);
+        friend.addFriend(loggedUser);
+        friend.addTrip(THAILAND);
+        friend.addTrip(USA);
+        List<Trip> trips = tripService.getTripsByUser(friend);
         System.out.println(trips);
         assertThat(trips.size(), is(2));
     }
